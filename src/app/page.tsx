@@ -1,103 +1,149 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import React, {useContext, useState} from 'react'
+import Header from './components/header'
+import Main from './components/main'
+import {Box, Typography, Tabs, Tab} from '@mui/material'
+import { Container } from '@mui/system'
+import { ExtensionContext } from './context/context'
+interface TabProps {
+  children? : React.ReactNode;
+  index: number;
+  value: number;
+}
+function MyTab({children, index, value}: TabProps) {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}>
+      {value === index && (
+        <Box sx={{
+          display: 'flex', 
+          gap: '10px',
+        }}>
+          {children}
+        </Box> 
+      )}
     </div>
   );
+} 
+
+
+function AllyProps (index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  }
 }
+const Home = () => {
+  const [value, setValue] = useState(0)
+  const {darkMode} = useContext(ExtensionContext)
+
+const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  setValue(newValue)
+}
+
+  return (
+    <Box sx={{paddingX: {md: '120px', sm: '40px', xs: '20px'},
+     paddingY: '20px',
+     background:  darkMode ? `linear-gradient(180deg, #040918 0%, #091540 100%)` : `linear-gradient(180deg, #EBF2FC 0%, #EEF8F9 100%)`,
+     color: darkMode ? 'white' : 'black',
+     minHeight: '100vh',
+     display: 'flex',
+     flexDirection : 'column',
+     gap: '20px',
+     }}>
+      <Header />
+      <Container
+      sx={{
+        display: 'flex',
+        flexDirection: {
+          xs: 'column',
+          sm: 'row',
+        },
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: '10px',
+      }}
+      >
+        <Typography
+        sx={{
+          fontSize: {xs: '15px', md :'23px'},
+          fontWeight: 700,   
+          color: darkMode ? 'white' : 'hsl(227, 75%, 14%)',
+        }}
+        >
+          Extension Lists
+        </Typography>
+        <Tabs value={value} 
+        onChange={handleTabChange} aria-label="basic tabs example" 
+        TabIndicatorProps={{
+          sx: {
+            display: 'none',
+          },
+        }}
+        sx={{
+          marginTop: {sm: '8px'}
+        }}
+        >
+          <Tab
+          sx={{
+           fontSize : {
+            xs: '11px',
+            md: '14px'
+          },
+          textTransform: 'Capitalize',
+          color: darkMode ? 'white' : 'black',
+          padding: '8px 15px', 
+          minHeight: 'auto', 
+          minWidth: 'auto',
+          border: '1px solid grey',
+          borderRadius: '45px',
+          backgroundColor: darkMode ? 'hsl(225, 23%, 24%)' : 'hsl(200, 60%, 99%)',
+          marginRight: '7px'
+        }}
+          {...AllyProps(0)} label="All" />
+          <Tab
+           sx={{
+            fontSize : {
+             xs: '11px',
+             md: '14px'
+           },
+           textTransform: 'Capitalize',
+          color: darkMode ? 'white' : 'black',
+          padding: '8px 15px', 
+          minHeight: 'auto', 
+          minWidth: 'auto',
+          border: '1px solid grey',
+          borderRadius: '45px',
+          backgroundColor: darkMode ? 'hsl(225, 23%, 24%)' : 'hsl(200, 60%, 99%)',
+          marginRight: '7px'
+
+         }}
+          {...AllyProps(1)} label="Active" />
+          <Tab
+           sx={{
+            fontSize : {
+             xs: '11px',
+             md: '14px'
+           },
+           textTransform: 'Capitalize',
+           color: darkMode ? 'white' : 'black',
+           padding: '8px 15px', 
+          minHeight: 'auto', 
+          minWidth: 'auto',
+          border: '1px solid grey',
+          borderRadius: '45px',
+          backgroundColor: darkMode ? 'hsl(225, 23%, 24%)' : 'hsl(200, 60%, 99%)'
+         }}
+          {...AllyProps(2)} label="Inactive" />
+        </Tabs>
+      </Container>
+      <Main MyTab = {MyTab} value={value}  />
+    </Box>
+  )
+}
+
+export default Home
