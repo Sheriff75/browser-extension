@@ -44,14 +44,15 @@ const Main: React.FC<MainProps> = ({ MyTab, value }) => {
               key={index}
               sx={{
                 display: 'flex',
-                height: '180px',
-                width: '100%',
+                minHeight: '180px',
+                minWidth: '300px',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 padding: '10px',
                 border: '1px solid transparent',
                 backgroundColor: darkMode ? 'hsl(225, 23%, 24%)' : 'hsl(200, 60%, 99%)',
                 borderRadius: '20px',
+                flexGrow: 1,
               }}
             >
               <Stack
@@ -129,12 +130,12 @@ const Main: React.FC<MainProps> = ({ MyTab, value }) => {
             .filter((item) => active.includes(item.name)) 
             .map((item, index) => (
               <Grid
-                size={{ xs: 12, sm: 6, md: 4 }}
+                size={{ xs: 12, sm: 6, md: 4, }}
                 key={index}
                 sx={{
                   display: 'flex',
-                  height: '180px',
-                  width: '100%',
+                  minHeight: '180px',
+                  minWidth: '300px',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   padding: '10px',
@@ -222,8 +223,8 @@ const Main: React.FC<MainProps> = ({ MyTab, value }) => {
                 key={index}
                 sx={{
                   display: 'flex',
-                  height: '180px',
-                  width: '100%',
+                  minHeight: '180px',
+                  minWidth: '300px',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   padding: '10px',
